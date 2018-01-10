@@ -39,6 +39,9 @@ public class SensorValues {
 		});
 
 		try {
+			if (args.length == 0)
+				throw new IllegalArgumentException();
+
 			// -------------------------
 			// 引数を取得
 			// -------------------------
@@ -52,10 +55,13 @@ public class SensorValues {
 				ret.put(sensor, Float.valueOf(value));
 			});
 
-		} catch (Exception e) {
+		} catch (IllegalArgumentException e1) {
+			(new HelpFormatter()).printHelp("java -jar raspi-comfort-sensor-iotcore-1.0.jar", cliOptions, true);
+			return null;
 
-			(new HelpFormatter()).printHelp("raspi-comfort-sensor-iotcore.sh", cliOptions, true);
-			System.err.println(e.getMessage());
+		} catch (Exception e2) {
+			(new HelpFormatter()).printHelp("java -jar raspi-comfort-sensor-iotcore-1.0.jar", cliOptions, true);
+			System.err.println(e2.getMessage());
 			return null;
 		}
 
